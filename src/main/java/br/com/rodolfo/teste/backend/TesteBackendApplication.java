@@ -1,4 +1,4 @@
-package com.rodolfo.cart.base.teste.backend;
+package br.com.rodolfo.teste.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

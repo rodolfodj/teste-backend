@@ -1,256 +1,265 @@
-swagger: "2.0"
+swagger: '2.0'
 info:
-  description: "Cadastro de clientes de uma assinatura de revistas."
-  version: "1.0.0"
-  title: "Swagger CART-BASE"
+  description: Cadastro de clientes de uma assinatura de revistas.
+  version: 1.0.0
+  title: Swagger
   contact:
-    email: "apiteam@swagger.io"
+    email: apiteam@swagger.io
   license:
-    name: "Apache 2.0"
-    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "localhost:8080"
-basePath: "/v1"
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+host: 'localhost:8080'
+basePath: /v1
 schemes:
-  - "https"
-  - "http"
+  - https
 securityDefinitions:
   basicAuth:
     type: basic
 paths:
   /cliente:
-    post:
+    put:
       tags:
-        - "cliente"
-      summary: "Add a new cliente"
-      description: ""
-      operationId: "cadastrar"
+        - cliente
+      summary: Add a new cliente
+      description: ''
+      operationId: cadastrar
       consumes:
-        - "application/json"
+        - application/json
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - in: "body"
-          name: "body"
+        - in: body
+          name: body
           required: true
           schema:
-            $ref: "#/definitions/Cliente"
+            $ref: '#/definitions/Cliente'
       responses:
-        "405":
-          description: "Invalid input"
+        '201':
+          description: Cliente cadastrado
+          schema:
+            $ref: '#/definitions/Cliente'
+        '405':
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/ClientApiResponse'
       security:
         - basicAuth: []
-  /cliente/{clienteId}:
+  '/cliente/{clienteId}':
     get:
       tags:
-        - "cliente"
-      summary: "Find cliente by ID"
-      description: "Returns a single cliente"
-      operationId: "getClientById"
-      consumes:
-        - "application/json"
+        - cliente
+      summary: Find cliente by ID
+      description: Returns a single cliente
+      operationId: getClientById
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - name: "clienteId"
-          in: "path"
-          description: "ID of cliente to return"
+        - name: clienteId
+          in: path
+          description: ID of cliente to return
           required: true
-          type: "integer"
-          format: "int64"
+          type: integer
+          format: int64
       responses:
-        "200":
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/Cliente"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Cliente not found"
+            $ref: '#/definitions/Cliente'
+        '400':
+          description: Invalid ID supplied
+          schema:
+            $ref: '#/definitions/ClientApiResponse'
+        '404':
+          description: Cliente not found
       security:
         - basicAuth: []
     post:
       tags:
-        - "cliente"
-      summary: "Updates a cliente in the store with form data"
-      operationId: "atualizar"
+        - cliente
+      summary: Updates a cliente in the store with form data
+      operationId: atualizar
       consumes:
-        - "application/x-www-form-urlencoded"
+        - application/x-www-form-urlencoded
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - name: "clienteId"
-          in: "path"
-          description: "ID of cliente that needs to be updated"
+        - name: clienteId
+          in: path
+          description: ID of cliente that needs to be updated
           required: true
-          type: "integer"
-          format: "int64"
-        - name: "name"
-          in: "formData"
-          description: "Updated name of the cliente"
+          type: integer
+          format: int64
+        - name: name
+          in: formData
+          description: Updated name of the cliente
           required: false
-          type: "string"
-        - name: "status"
-          in: "formData"
-          description: "Updated status of the cliente"
+          type: string
+        - name: status
+          in: formData
+          description: Updated status of the cliente
           required: false
-          type: "string"
+          type: string
       responses:
-        "200":
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/Cliente"
-        "405":
-          description: "Invalid input"
+            $ref: '#/definitions/Cliente'
+        '404':
+          description: Cliente not found
+        '405':
+          description: Invalid input
+          schema:
+            $ref: '#/definitions/ClientApiResponse'
       security:
         - basicAuth: []
     delete:
       tags:
-        - "cliente"
-      summary: "Deletes a cliente"
-      description: ""
-      operationId: "excluir"
+        - cliente
+      summary: Deletes a cliente
+      description: ''
+      operationId: excluir
       consumes:
-        - "application/json"
+        - application/json
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - name: "clienteId"
-          in: "path"
-          description: "ID of cliente to delete"
+        - name: clienteId
+          in: path
+          description: ID of cliente to delete
           required: true
-          type: "integer"
-          format: "int64"
+          type: integer
+          format: int64
       responses:
-        "200":
-          description: "successful operation"
+        '200':
+          description: successful operation
           schema:
-            $ref: "#/definitions/ClientApiResponse"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Cliente not found"
+            $ref: '#/definitions/ClientApiResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Cliente not found
       security:
         - basicAuth: []
     patch:
       tags:
-        - "cliente"
-      summary: "Confirm a new cliente"
-      description: ""
-      operationId: "confirmar"
+        - cliente
+      summary: Confirm a new cliente
+      description: ''
+      operationId: confirmar
       consumes:
-        - "application/json"
+        - application/json
       produces:
-        - "application/json"
+        - application/json
       parameters:
-        - name: "clienteId"
-          in: "path"
-          description: "Client id to confirm"
+        - name: clienteId
+          in: path
+          description: Client id to confirm
           required: true
-          type: "integer"
-          format: "int64"
+          type: integer
+          format: int64
       responses:
-        "200":
-          description: "successful operation"
-        "400":
-          description: "Invalid ID supplied"
-        "404":
-          description: "Cliente not found"
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Cliente not found
       security:
         - basicAuth: []
 definitions:
   Cliente:
-    type: "object"
+    type: object
     required:
-      - "name"
-      - "email"
+      - name
+      - email
     properties:
       id:
-        type: "integer"
-        format: "int64"
+        type: integer
+        format: int64
       name:
-        type: "string"
+        type: string
         maximum: 50
       email:
-        type: "string"
-        format: "email"
+        type: string
+        format: email
         maximum: 50
       telefone:
-        type: "string"
-        format: "phone"
+        type: string
+        format: phone
         pattern: '^\(\d{2}\)\d{,1}\d{4}-\d{4}$'
       status:
-        type: "string"
-        description: "cliente status in the bank"
+        type: string
+        description: cliente status in the bank
         enum:
-          - "ativo"
-          - "inativo"
-          - "pendente"
+          - ativo
+          - inativo
+          - pendente
       endereco:
-        $ref: "#/definitions/Endereco"
+        $ref: '#/definitions/Endereco'
   Endereco:
-    type: "object"
+    type: object
     required:
-      - "rua"
-      - "cep"
-      - "numero"
+      - rua
+      - cep
+      - numero
     properties:
       rua:
-        type: "string"
+        type: string
         maximum: 100
       numero:
-        type: "integer"
+        type: integer
       complemento:
-        type: "string"
+        type: string
         maximum: 30
       bairro:
-        type: "string"
+        type: string
         maximum: 30
       cep:
-        type: "string"
+        type: string
         pattern: '^\d{5}-\d{3}'
       cidade:
-        type: "string"
+        type: string
         maximum: 80
       estado:
-        type: "string"
+        type: string
         enum:
-          - AC,
-          - AL,
-          - AP,
-          - AM,
-          - BA,
-          - CE,
-          - DF,
-          - ES,
-          - GO,
-          - MA,
-          - MT,
-          - MS,
-          - MG,
-          - PA,
-          - PB,
-          - PR,
-          - PE,
-          - PI,
-          - RJ,
-          - RN,
-          - RS,
-          - RO,
-          - RR,
-          - SC,
-          - SP,
-          - SE,
+          - 'AC,'
+          - 'AL,'
+          - 'AP,'
+          - 'AM,'
+          - 'BA,'
+          - 'CE,'
+          - 'DF,'
+          - 'ES,'
+          - 'GO,'
+          - 'MA,'
+          - 'MT,'
+          - 'MS,'
+          - 'MG,'
+          - 'PA,'
+          - 'PB,'
+          - 'PR,'
+          - 'PE,'
+          - 'PI,'
+          - 'RJ,'
+          - 'RN,'
+          - 'RS,'
+          - 'RO,'
+          - 'RR,'
+          - 'SC,'
+          - 'SP,'
+          - 'SE,'
           - TO
   ClientApiResponse:
-    type: "object"
+    type: object
     properties:
       code:
-        type: "integer"
-        format: "int32"
+        type: integer
+        format: int32
       type:
-        type: "string"
+        type: string
       message:
-        type: "string"
+        type: string
 externalDocs:
-  description: "Find out more about Swagger"
-  url: "http://swagger.io"
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

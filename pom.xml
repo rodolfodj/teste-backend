@@ -8,21 +8,22 @@
         <version>2.2.7.BUILD-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.rodolfo.cart.base</groupId>
+    <groupId>br.com.rodolfo</groupId>
     <artifactId>teste-backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>teste-backend</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>8</java.version>
+        <java.version>11</java.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <springfox-version>2.7.0</springfox-version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <version.swagger.codegen>2.3.1</version.swagger.codegen>
-        <yaml.file>${project.basedir}/src/main/resources/swagger/swagger.yaml</yaml.file>
+        <model-mapper.version>2.3.0</model-mapper.version>
+        <org.mapstruct.version>1.4.1.Final</org.mapstruct.version>
     </properties>
 
     <dependencies>
@@ -54,7 +55,6 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,15 +78,43 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${org.mapstruct.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.threeten/threetenbp -->
+        <dependency>
+            <groupId>org.threeten</groupId>
+            <artifactId>threetenbp</artifactId>
+            <version>1.5.0</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.12.0-rc1</version>
+        </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.springframework.boot</groupId>-->
+            <!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+            <!--            </plugin>-->
             <plugin>
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-codegen-maven-plugin</artifactId>
@@ -97,56 +125,73 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${yaml.file}</inputSpec>
                             <artifactId>contract-service</artifactId>
-                            <output>${basedir}/target/generated-sources</output>
+                            <inputSpec>${project.basedir}/src/main/resources/swagger/swagger.yaml</inputSpec>
+                            <!--                            <output>${basedir}/target/generated-sources</output>-->
                             <language>spring</language>
-                            <apiPackage>com.rodolfo.cart.base.teste.backend.api</apiPackage>
-                            <modelPackage>com.rodolfo.cart.base.teste.backend.api.domain</modelPackage>
-                            <generateSupportingFiles>false</generateSupportingFiles>
+                            <!--                            <library>spring-boot</library>-->
+                            <apiPackage>com.rodolfo.teste.backend.api</apiPackage>
+                            <modelPackage>com.rodolfo.teste.backend.api.domain</modelPackage>
+                            <modelNameSuffix>Representation</modelNameSuffix>
                             <configOptions>
-                                <sourceFolder>src/main/java</sourceFolder>
-                                <interfaceOnly>false</interfaceOnly>
+                                <dateLibrary>java8</dateLibrary>
+                                <!--                                <interfaceOnly>false</interfaceOnly>-->
                                 <library>spring-boot</library>
-                                <singleContentTypes>true</singleContentTypes>
+                                <!--                                <singleContentTypes>true</singleContentTypes>-->
                             </configOptions>
                         </configuration>
                     </execution>
                 </executions>
 
             </plugin>
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-compiler-plugin</artifactId>-->
+            <!--                <version>3.8.1</version>-->
+            <!--                <configuration>-->
+            <!--                    <source>${java.version}</source>-->
+            <!--                    <target>${java.version}</target>-->
+            <!--                    <annotationProcessorPaths>-->
+            <!--                        <path>-->
+            <!--                            <groupId>org.mapstruct</groupId>-->
+            <!--                            <artifactId>mapstruct-processor</artifactId>-->
+            <!--                            <version>${org.mapstruct.version}</version>-->
+            <!--                        </path>-->
+            <!--                    </annotationProcessorPaths>-->
+            <!--                </configuration>-->
+            <!--            </plugin>-->
         </plugins>
     </build>
 
-    <repositories>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-        </repository>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
+    <!--    <repositories>-->
+    <!--        <repository>-->
+    <!--            <id>spring-milestones</id>-->
+    <!--            <name>Spring Milestones</name>-->
+    <!--            <url>https://repo.spring.io/milestone</url>-->
+    <!--        </repository>-->
+    <!--        <repository>-->
+    <!--            <id>spring-snapshots</id>-->
+    <!--            <name>Spring Snapshots</name>-->
+    <!--            <url>https://repo.spring.io/snapshot</url>-->
+    <!--            <snapshots>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </snapshots>-->
+    <!--        </repository>-->
+    <!--    </repositories>-->
+    <!--    <pluginRepositories>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>spring-milestones</id>-->
+    <!--            <name>Spring Milestones</name>-->
+    <!--            <url>https://repo.spring.io/milestone</url>-->
+    <!--        </pluginRepository>-->
+    <!--        <pluginRepository>-->
+    <!--            <id>spring-snapshots</id>-->
+    <!--            <name>Spring Snapshots</name>-->
+    <!--            <url>https://repo.spring.io/snapshot</url>-->
+    <!--            <snapshots>-->
+    <!--                <enabled>true</enabled>-->
+    <!--            </snapshots>-->
+    <!--        </pluginRepository>-->
+    <!--    </pluginRepositories>-->
 
 </project>
