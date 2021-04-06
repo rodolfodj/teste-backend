@@ -1,4 +1,5 @@
 # teste-backend
+[![Build Status](https://travis-ci.org/rodolfodj/teste-backend.svg?branch=developer)](https://travis-ci.org/rodolfodj/teste-backend)
 
 #### Objetivo
 Automatizar o sistema de cadastro de clientes, atualmente controlado através de planilha Excel e formulários.

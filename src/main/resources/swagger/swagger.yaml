@@ -89,21 +89,16 @@ paths:
           required: true
           type: integer
           format: int64
-        - name: name
-          in: formData
-          description: Updated name of the cliente
-          required: false
-          type: string
-        - name: status
-          in: formData
-          description: Updated status of the cliente
-          required: false
-          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Cliente'
       responses:
         '200':
           description: successful operation
           schema:
-            $ref: '#/definitions/Cliente'
+            $ref: '#/definitions/ClientApiResponse'
         '404':
           description: Cliente not found
         '405':
