@@ -3,6 +3,7 @@ package br.com.rodolfo.teste.backend.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @Validated
 @AllArgsConstructor
+@NoArgsConstructor
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = {"id", "email"}))
 public class Cliente {
 
@@ -32,15 +34,10 @@ public class Cliente {
     private String telefone;
 
     @Enumerated(EnumType.ORDINAL)
-    private int status;
+    private Status status;
 
-    public void setStatus(Status status) {
-        this.status = status.ordinal();
-    }
-
-    public Status getStatus() {
-        return Status.values()[status];
-    }
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    private Endereco endereco;
 
     public boolean isConfirmado() {
         return !getStatus().equals(Status.PENDENTE);

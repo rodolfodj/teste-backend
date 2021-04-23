@@ -55,6 +55,8 @@ public class ClienteController implements ClienteApi {
                 return ResponseEntity.notFound().build();
             }
 
+            log.info("TESte");
+
             return ResponseEntity.ok(mapper.mapperToRepresentation(optionalCliente.get()));
 
         } catch (BusinessException e) {

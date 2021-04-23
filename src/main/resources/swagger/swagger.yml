@@ -139,7 +139,7 @@ paths:
       tags:
         - cliente
       summary: Confirm a new cliente
-      description: ''
+      description: 'Confirmar o cadastro do cliente'
       operationId: confirmar
       consumes:
         - application/json
@@ -181,7 +181,7 @@ definitions:
       telefone:
         type: string
         format: phone
-        pattern: '^\(\d{2}\)\d{,1}\d{4}-\d{4}$'
+        pattern: '^\(\d{2}\)\d{4,5}-\d{4}$'
       status:
         type: string
         description: cliente status in the bank
